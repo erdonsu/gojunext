@@ -2,38 +2,43 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "Bagaimana cara mendaftar?",
+    question: "Apakah GoJuara sudah tidak mengadakan kompetisi?",
     answer:
-      "Untuk mendaftar, kunjungi halaman Program di website GoJuara dan ikuti petunjuk yang tertera. Isi formulir pendaftaran dengan informasi yang diminta, dan pastikan untuk melengkapi semua persyaratan yang dibutuhkan.",
+      "GoJuara tetap berkomitmen untuk mendukung generasi muda Indonesia — dan kompetisi adalah bagian dari DNA kami. Saat ini kami sedang mempersiapkan sesuatu yang lebih besar. Nantikan kompetisi GoJuara berikutnya, dan pastikan kamu sudah follow media sosial kami agar tidak ketinggalan!",
   },
   {
-    question: "Bagaimana kompetisi GoJuara dinilai?",
+    question: "Bagaimana cara memesan buku?",
     answer:
-      "Proses penilaian kompetisi GoJuara umumnya didasarkan pada skor atau poin yang diperoleh oleh peserta berdasarkan penilaian jawaban mereka dalam tes atau tantangan yang diberikan. Penilaian dapat dilakukan oleh juri atau sistem otomatis yang telah ditentukan.",
+      "Kamu bisa langsung klik tombol 'Beli Sekarang' di halaman buku yang kamu inginkan, lalu ikuti proses pemesanan. Kami akan menghubungi kamu untuk konfirmasi dan pengiriman.",
   },
   {
-    question: "Apakah ada biaya pendaftaran?",
+    question: "Berapa lama pengiriman buku?",
     answer:
-      "Biaya pendaftaran kompetisi GoJuara dapat berbeda-beda tergantung pada jenis kompetisi yang diadakan. Beberapa kompetisi gratis dan beberapa berbayar. Informasi terkait biaya pendaftaran akan dijelaskan pada halaman program.",
+      "Estimasi pengiriman 2–5 hari kerja tergantung lokasi kamu. Kami menggunakan jasa pengiriman terpercaya agar buku sampai dalam kondisi baik.",
   },
   {
-    question: "Siapa yang dapat mengikuti kejuaraan GoJuara?",
+    question: "Apakah buku ini tersedia di toko buku lain?",
     answer:
-      "Kompetisi GoJuara terbuka untuk semua individu atau tim yang memenuhi persyaratan yang ditetapkan. Persyaratan umumnya mencakup usia, tingkat pendidikan, atau kriteria khusus yang sesuai dengan jenis program kompetisi yang diadakan.",
+      "Sebagian buku sudah tersedia di Gramedia dan toko buku online seperti Tokopedia dan Shopee. Namun untuk harga terbaik dan edisi terbaru, kami rekomendasikan pesan lewat website ini.",
   },
   {
-    question: "Apa manfaat yang bisa didapatkan?",
+    question: "Buku ini cocok untuk siapa?",
     answer:
-      "Mengikuti kompetisi GoJuara memberikan kesempatan untuk memperoleh sertifikat penghargaan, piala, dan merchandise eksklusif. Selain itu, peserta juga dapat mengasah pengetahuan, keterampilan, dan membangun jaringan dengan peserta lainnya.",
+      "Tergantung judulnya — ada yang ditujukan untuk guru, orang tua, atau umum. Setiap halaman buku memiliki deskripsi lengkap tentang target pembacanya.",
   },
   {
-    question: "Bagaimana cara mendapatkan informasi lebih lanjut?",
+    question: "Apakah ada diskon untuk pembelian dalam jumlah banyak?",
     answer:
-      "Untuk informasi lebih lanjut, kamu bisa mengunjungi halaman Kontak, atau bisa melalui whatsapp dengan menekan tombol whatsapp di pojok kanan bawah.",
+      "Ada! Untuk pembelian lebih dari 10 eksemplar (misalnya untuk sekolah atau komunitas), silakan hubungi kami langsung melalui halaman Kontak atau WhatsApp.",
+  },
+  {
+    question: "Bagaimana jika buku yang saya terima rusak atau salah?",
+    answer:
+      "Kami bertanggung jawab penuh. Hubungi kami dalam 3x24 jam setelah buku diterima, dan kami akan proses penggantian tanpa biaya tambahan.",
   },
 ];
 
@@ -45,12 +50,13 @@ export default function FAQ() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".faq-item",
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
           duration: 0.5,
-          stagger: 0.1,
+          stagger: 0.08,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 80%",
@@ -68,57 +74,67 @@ export default function FAQ() {
   };
 
   return (
-    <section ref={sectionRef} className="py-20 bg-white" id="faq">
+    <section ref={sectionRef} className="py-24 bg-white" id="faq">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium mb-4">
+          <div className="inline-flex items-center gap-2 bg-[#0055b8]/8 text-[#0055b8] px-5 py-2 rounded-full text-sm font-semibold mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0055b8]" />
             FAQ
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            Pertanyaan seputar GoJuara
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6">
+            Ada yang ingin{" "}
+            <span className="text-[#0055b8]">ditanyakan?</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Temukan jawaban untuk pertanyaan yang sering ditanyakan
+          <p className="text-base sm:text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">
+            Pertanyaan yang paling sering masuk — kami jawab langsung di sini.
           </p>
         </div>
 
         {/* FAQ List */}
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-3xl mx-auto space-y-3">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="faq-item border border-gray-200 rounded-xl overflow-hidden"
+              className="faq-item rounded-2xl overflow-hidden"
+              style={{
+                backgroundColor: "#0055b8",
+                border: "2px solid #fde047",
+              }}
             >
               <button
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between px-6 py-5 text-left transition-opacity duration-200 hover:opacity-90"
                 onClick={() => toggleFAQ(index)}
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <HelpCircle className="text-blue-600" size={20} />
-                  </div>
-                  <span className="font-semibold text-gray-900">
-                    {faq.question}
-                  </span>
-                </div>
+                <span
+                  className="font-semibold text-sm sm:text-base pr-4 leading-snug"
+                  style={{ color: openIndex === index ? "#fde047" : "white" }}
+                >
+                  {faq.question}
+                </span>
                 <ChevronDown
-                  className={`text-gray-400 transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""
-                    }`}
-                  size={24}
+                  className={`shrink-0 transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""}`}
+                  size={20}
+                  style={{ color: "#fde047" }}
                 />
               </button>
+
+              {/* Answer */}
               <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                   }`}
               >
-                <div className="p-6 pt-0 text-gray-600 leading-relaxed">
+                <div
+                  className="px-6 pb-6 text-sm sm:text-base text-white/80 leading-relaxed font-medium"
+                >
                   {faq.answer}
                 </div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );

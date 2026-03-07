@@ -1,62 +1,84 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import { Target, BookOpen, Users } from "lucide-react";
 
 const features = [
   {
     icon: Target,
-    title: "Visi",
-    description: "Memfasilitasi generasi agar memiliki kecintaan terhadap ilmu pengetahuan dan pendidikan karakter.",
+    title: "Lahir dari Pengalaman",
+    description: "Ditulis langsung oleh praktisi yang lebih dari satu dekade berkecimpung di dunia perlindungan anak dan pendidikan nasional.",
   },
   {
     icon: BookOpen,
-    title: "Misi",
-    description: "Menguji kemampuan, keterampilan serta membangun semangat kompetisi yang sehat.",
+    title: "Diakui Secara Nasional",
+    description: "Diterbitkan oleh Erlangga dan Masmedia, penerbit terpercaya rujukan para pendidik Indonesia.",
   },
   {
     icon: Users,
-    title: "Platform",
-    description: "Memberikan platform bagi individu dan tim untuk saling belajar dan berbagi ide.",
+    title: "Untuk Semua",
+    description: "Untuk guru, orang tua, dan anak — buku yang menjawab tantangan nyata generasi Indonesia hari ini.",
   },
 ];
 
 export default function About() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Image animation
-      gsap.fromTo(
-        imageRef.current,
-        { opacity: 0, x: -50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
+      // Master timeline triggered on scroll
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          toggleActions: "play none none reverse",
+        },
+        defaults: { ease: "power3.out" },
+      });
 
-      // Content animation
-      gsap.fromTo(
-        contentRef.current,
-        { opacity: 0, x: 50 },
+      // Left photos fan in
+      tl.fromTo(".photo-left-1",
+        { opacity: 0, x: -80, rotation: 0 },
+        { opacity: 1, x: 0, rotation: -8, duration: 0.9, ease: "back.out(1.5)" }
+      )
+        .fromTo(".photo-left-2",
+          { opacity: 0, x: -50, rotation: 0 },
+          { opacity: 1, x: 0, rotation: -2, duration: 0.9, ease: "back.out(1.5)" },
+          "-=0.7"
+        )
+        // Center text reveal
+        .fromTo(".reveal-text",
+          { opacity: 0, y: 40, clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)" },
+          { opacity: 1, y: 0, clipPath: "polygon(0 0, 100% 0, 100% 120%, 0 120%)", duration: 1, stagger: 0.2, ease: "power3.out" },
+          "-=0.7"
+        )
+        // Right photos fan in
+        .fromTo(".photo-right-1",
+          { opacity: 0, x: 80, rotation: 0 },
+          { opacity: 1, x: 0, rotation: 8, duration: 0.9, ease: "back.out(1.5)" },
+          "-=0.75"
+        )
+        .fromTo(".photo-right-2",
+          { opacity: 0, x: 50, rotation: 0 },
+          { opacity: 1, x: 0, rotation: 2, duration: 0.9, ease: "back.out(1.5)" },
+          "-=0.75"
+        );
+
+      // Start floating loops (inside context so ctx.revert() cleans them)
+      gsap.to(".photo-left-1", { y: -14, duration: 2.8, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1 });
+      gsap.to(".photo-left-2", { y: 12, duration: 3.2, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.6 });
+      gsap.to(".photo-right-1", { y: -10, duration: 3.0, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.3 });
+      gsap.to(".photo-right-2", { y: 16, duration: 2.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1.9 });
+
+      // Cards stagger
+      gsap.fromTo(".about-card",
+        { opacity: 0, y: 30 },
         {
-          opacity: 1,
-          x: 0,
-          duration: 1,
+          opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: "power3.out",
           scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
+            trigger: ".about-cards",
+            start: "top 88%",
             toggleActions: "play none none reverse",
           },
         }
@@ -67,67 +89,121 @@ export default function About() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-20 bg-white" id="tentang">
+    <section ref={sectionRef} className="py-24 bg-white overflow-hidden" id="tentang">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Image */}
-          <div ref={imageRef} className="relative">
-            <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src="/images/about-photo.png"
-                alt="Tentang GoJuara"
-                fill
-                className="object-cover"
-              />
-            </div>
-            {/* Decorative elements */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-100 rounded-full -z-10" />
-            <div className="absolute -top-6 -left-6 w-24 h-24 bg-yellow-100 rounded-full -z-10" />
+
+        {/* === 3-Column: [photos left] [center text] [photos right] === */}
+        <div className="flex items-center gap-8 lg:gap-12 mb-20">
+
+          {/* Left floating photos */}
+          <div className="relative shrink-0 w-[220px] h-[420px] hidden lg:block">
+            {/* Back photo — taller, rotated */}
+            <div
+              className="photo-left-1 absolute top-4 left-0 w-[130px] rounded-2xl bg-gray-200 shadow-2xl"
+              style={{ aspectRatio: "3/4", transformOrigin: "bottom center" }}
+            />
+            {/* Front photo — slightly smaller, less rotation */}
+            <div
+              className="photo-left-2 absolute bottom-0 right-0 w-[150px] rounded-2xl bg-gray-300 shadow-xl ring-4 ring-white"
+              style={{ aspectRatio: "3/4", transformOrigin: "bottom center" }}
+            />
           </div>
 
-          {/* Content */}
-          <div ref={contentRef}>
-            <div className="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium mb-4">
+          {/* Center — title & paragraphs */}
+          <div className="flex-1 text-center max-w-2xl mx-auto">
+            <div className="reveal-text inline-block bg-blue-50 border border-blue-200 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-8 tracking-wide">
               Tentang Kami
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
-              Membangun Generasi{" "}
-              <span className="text-blue-600">Cerdas dan Berkarakter</span>
+            <h2 className="reveal-text text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-[1.2] tracking-tight mb-8 pb-2">
+              Membangun{" "}
+              <span className="text-blue-600">Generasi</span>
+              <br />
+              Cerdas &amp;{" "}
+              <span className="relative inline-block">
+                Berkarakter
+                <span className="absolute -bottom-1 left-0 w-full h-[3px] sm:h-[4px] bg-yellow-400 rounded-full" />
+              </span>
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              GoJuara adalah wadah kejuaraan tingkat nasional yang didedikasikan
-              untuk mempertemukan para calon juara cerdas dari berbagai daerah
-              di seluruh Indonesia. SangJuara memfasilitasi kompetisi, menguji
-              kemampuan, keterampilan serta membangun semangat kompetisi yang
-              sehat.
+            <p className="reveal-text text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed mb-6">
+              Setelah sukses mengadakan puluhan kompetisi dan mendampingi ribuan
+              pelajar dari seluruh Indonesia, GoJuara ingin hadir lebih dekat lagi
+              — tidak hanya di panggung kejuaraan, tapi juga di rak buku di rumah,
+              di meja belajar, dan di tangan para guru.
             </p>
-            <p className="text-gray-600 leading-relaxed mb-8">
-              Kami memiliki misi memfasilitasi generasi agar memiliki kecintaan
-              terhadap ilmu pengetahuan, pendidikan karakter, perlindungan anak,
-              seni, budaya dan sejumlah bidang lainnya. Kami memberikan platform
-              bagi individu dan tim untuk saling belajar, berbagi ide, dan
-              menemukan potensi terbaik mereka melalui berbagai kompetisi.
+            <p className="reveal-text text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
+              Bersama Associate Prof. Dr. Susanto, MA — mantan Ketua KPAI, peraih
+              penghargaan penulis pendidikan terbaik nasional, dan pendiri Yayasan
+              Pusat Sang Juara — kami menghadirkan karya-karya yang lahir dari
+              pengalaman nyata di lapangan. Bukan sekadar buku, melainkan bekal
+              untuk generasi yang lebih siap menghadapi dunia.
             </p>
+          </div>
 
-            {/* Features Grid */}
-            <div className="grid sm:grid-cols-3 gap-6">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="text-center p-4 rounded-xl bg-gray-50 hover:bg-blue-50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group cursor-default"
-                >
-                  <div className="w-12 h-12 bg-blue-100 group-hover:bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-3 transition-colors duration-300">
-                    <feature.icon className="text-blue-600 group-hover:text-blue-700 transition-colors duration-300" size={24} />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 mb-1 transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">{feature.description}</p>
-                </div>
-              ))}
-            </div>
+          {/* Right floating photos */}
+          <div className="relative shrink-0 w-[220px] h-[420px] hidden lg:block">
+            {/* Back photo */}
+            <div
+              className="photo-right-1 absolute top-4 right-0 w-[130px] rounded-2xl bg-gray-200 shadow-2xl"
+              style={{ aspectRatio: "3/4", transformOrigin: "bottom center" }}
+            />
+            {/* Front photo */}
+            <div
+              className="photo-right-2 absolute bottom-0 left-0 w-[150px] rounded-2xl bg-gray-300 shadow-xl ring-4 ring-white"
+              style={{ aspectRatio: "3/4", transformOrigin: "bottom center" }}
+            />
           </div>
         </div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-gray-100 mb-16" />
+
+        {/* === 3 Feature Cards === */}
+        <div className="about-cards grid sm:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="about-card group p-6 rounded-2xl border border-gray-100 bg-gray-50 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-default"
+              style={{ transitionProperty: "all" }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget;
+                el.style.backgroundColor = "#0055b8";
+                el.style.borderColor = "#0055b8";
+                const iconBox = el.querySelector<HTMLElement>(".icon-box");
+                const icon = el.querySelector<HTMLElement>(".icon-box svg");
+                const title = el.querySelector<HTMLElement>(".card-title");
+                const desc = el.querySelector<HTMLElement>(".card-desc");
+                if (iconBox) { iconBox.style.backgroundColor = "rgba(255,255,255,0.15)"; iconBox.style.borderColor = "rgba(255,255,255,0.2)"; }
+                if (icon) icon.style.color = "#fde047";
+                if (title) title.style.color = "#fde047";
+                if (desc) desc.style.color = "rgba(255,255,255,0.8)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget;
+                el.style.backgroundColor = "";
+                el.style.borderColor = "";
+                const iconBox = el.querySelector<HTMLElement>(".icon-box");
+                const icon = el.querySelector<HTMLElement>(".icon-box svg");
+                const title = el.querySelector<HTMLElement>(".card-title");
+                const desc = el.querySelector<HTMLElement>(".card-desc");
+                if (iconBox) { iconBox.style.backgroundColor = ""; iconBox.style.borderColor = ""; }
+                if (icon) icon.style.color = "";
+                if (title) title.style.color = "";
+                if (desc) desc.style.color = "";
+              }}
+            >
+              <div className="icon-box w-11 h-11 bg-white border border-gray-200 rounded-xl flex items-center justify-center mb-5 shadow-sm" style={{ transition: "all 0.3s" }}>
+                <feature.icon className="text-[#0055b8]" size={20} style={{ transition: "color 0.3s" }} />
+              </div>
+              <h3 className="card-title font-semibold text-gray-900 mb-2" style={{ transition: "color 0.3s" }}>
+                {feature.title}
+              </h3>
+              <p className="card-desc text-sm text-gray-500 leading-relaxed" style={{ transition: "color 0.3s" }}>
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

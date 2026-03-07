@@ -2,20 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, Youtube, MessageCircle } from "lucide-react";
+import { Instagram, Youtube, MessageCircle, CheckCircle2 } from "lucide-react";
 
 const mainLinks = [
   { href: "/tentang-kami", label: "Tentang Kami" },
   { href: "/program", label: "Program" },
   { href: "/kontak", label: "Kontak" },
-  { href: "/artikel", label: "Artikel" },
-];
-
-const helpLinks = [
-  { href: "/syarat-ketentuan", label: "Syarat dan Ketentuan" },
-  { href: "/kebijakan-privasi", label: "Kebijakan Privasi" },
-  { href: "#faq", label: "FAQ" },
-  { href: "/kontak", label: "Karir" },
+  { href: "/blog", label: "Blog" },
 ];
 
 const socialLinks = [
@@ -25,47 +18,62 @@ const socialLinks = [
 ];
 
 const legalInfo = [
-  {
-    text: "Keputusan Menteri Hukum dan Ham RI., Nomor AHU - 0000569.AH.01.04 Tahun 2023",
-  },
-  {
-    text: "Keputusan Menteri Investasi/BKPM, Nomor Induk Berusaha : 2010230070043",
-  },
-  {
-    text: "Keputusan Dirjen Kekayaan Intelektual, Perlindungan Merek Go Juara Nomor IDM001245044",
-  },
+  "Keputusan Menteri Hukum dan Ham RI., Nomor AHU - 0000569.AH.01.04 Tahun 2023",
+  "Keputusan Menteri Investasi/BKPM, Nomor Induk Berusaha : 2010230070043",
+  "Keputusan Dirjen Kekayaan Intelektual, Perlindungan Merek Go Juara Nomor IDM001245044",
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 border-t">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Column */}
-          <div className="space-y-4">
-            <Link href="/" className="inline-block">
+    <footer className="bg-[#0055b8]">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+
+        {/* Top grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
+          {/* Brand/About (Lebih lebar di desktop) */}
+          <div className="md:col-span-5 lg:col-span-4 space-y-6">
+            <Link href="/">
               <Image
                 src="/images/logo-gojuara.png"
-                alt="GoJuara"
+                alt="GoJuara Logo"
                 width={180}
-                height={60}
-                className="h-12 w-auto"
+                height={58}
+                className="h-12 w-auto brightness-0 invert"
               />
             </Link>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Yayasan Pusat Sang Juara adalah wadah yang mempertemukan para calon juara cerdas dari berbagai sekolah di seluruh Indonesia.
+            <p className="text-white/80 text-base leading-relaxed">
+              Yayasan Pusat Sang Juara — mendampingi generasi muda Indonesia menjadi lebih cerdas dan berkarakter.
             </p>
+            <div className="flex gap-4 pt-2">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-11 h-11 rounded-full flex items-center justify-center bg-white/10 hover:bg-[#fde047] hover:-translate-y-1 group transition-all duration-300 shadow-sm"
+                >
+                  <s.icon size={20} className="text-white group-hover:text-[#0055b8] transition-colors" />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Main Menu */}
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4">Menu Utama</h3>
-            <ul className="space-y-2">
+          {/* Spacer untuk memberikan jarak antar kolom */}
+          <div className="hidden lg:block lg:col-span-5"></div>
+
+          {/* Menu Utama */}
+          <div className="md:col-span-7 lg:col-span-3 flex flex-col md:items-end">
+            <h4 className="font-extrabold mb-8 text-[#fde047] text-sm sm:text-base uppercase tracking-widest flex items-center md:justify-end w-full">
+              MENU UTAMA
+            </h4>
+            <ul className="space-y-6 flex flex-col items-start md:items-end w-full">
               {mainLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
+                    className="text-white/90 hover:text-white text-[15px] font-medium transition-all duration-200 inline-block hover:translate-x-1 md:hover:-translate-x-1"
                   >
                     {link.label}
                   </Link>
@@ -74,88 +82,42 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Help Menu */}
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4">Bantuan</h3>
-            <ul className="space-y-2">
-              {helpLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* (Kolom dihapus) */}
 
-          {/* Social & Coming Soon */}
-          <div>
-            <h3 className="font-semibold text-gray-900 mb-4">Ikuti Kami</h3>
-            <div className="flex gap-4 mb-6">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all"
-                  aria-label={social.label}
-                >
-                  <social.icon size={20} />
-                </a>
-              ))}
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-medium text-gray-900 text-sm">Segera Hadir</h4>
-              <Image
-                src="/images/coming-soon.png"
-                alt="Coming Soon"
-                width={120}
-                height={40}
-                className="h-10 w-auto opacity-70"
-              />
-            </div>
-          </div>
         </div>
 
-        {/* Legal Info */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <div className="space-y-3">
-            {legalInfo.map((info, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <Image
-                  src="/images/verified-badge.png"
-                  alt="Verified"
-                  width={20}
-                  height={20}
-                  className="mt-0.5 flex-shrink-0"
-                />
-                <p className="text-gray-500 text-xs">{info.text}</p>
+        {/* Divider */}
+        <div className="h-px bg-white/10 mb-10 w-full" />
+
+        {/* Legal & Copyright */}
+        <div className="flex flex-col items-center justify-center text-center space-y-4 mb-4">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-x-6 gap-y-3">
+            {legalInfo.map((text, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <CheckCircle2 size={13} className="text-[#fde047] opacity-90" />
+                <p className="text-white/60 text-xs sm:text-[13px] font-medium tracking-wide">
+                  {text}
+                </p>
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-gray-200 text-center">
-          <p className="text-gray-500 text-sm">
-            &copy; 2023 Copyright by GoJuara | Yayasan Pusat Sang Juara, All Right Reserved
+          {/* Copyright */}
+          <p className="text-white/50 text-xs sm:text-[13px] font-medium tracking-wide mt-6">
+            © {new Date().getFullYear()} GoJuara · Yayasan Pusat Sang Juara. All Rights Reserved.
           </p>
         </div>
       </div>
 
-      {/* WhatsApp Float Button */}
+      {/* WhatsApp Float */}
       <a
         href="https://wa.me/6282258692808?text=Halo%2C+Admin+GoJuara%21+Saya+ingin+bertanya..."
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 z-50"
+        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl shadow-green-500/30 transition-all hover:scale-110 z-50"
         aria-label="Chat on WhatsApp"
       >
-        <MessageCircle size={28} fill="white" />
+        <MessageCircle size={28} className="fill-white" />
       </a>
     </footer>
   );

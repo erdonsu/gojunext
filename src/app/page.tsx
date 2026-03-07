@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
-import Benefits from "@/components/sections/Benefits";
-import Announcements from "@/components/sections/Announcements";
+import AuthorProfile from "@/components/sections/AuthorProfile";
+import ProductShowcase from "@/components/sections/ProductShowcase";
 import FAQ from "@/components/sections/FAQ";
+import Testimonials from "@/components/sections/Testimonials";
+import QuoteSection from "@/components/sections/QuoteSection";
 import MediaCoverage from "@/components/sections/MediaCoverage";
 
 export const metadata: Metadata = {
@@ -23,8 +25,10 @@ export default function Home() {
     <>
       <Hero />
       <About />
-      <Benefits />
-      <Announcements />
+      <AuthorProfile />
+      <ProductShowcase />
+      <QuoteSection />
+      <Testimonials />
       <FAQ />
       <MediaCoverage />
     </>

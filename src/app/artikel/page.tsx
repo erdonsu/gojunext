@@ -79,13 +79,13 @@ export default function ArtikelPage() {
                         <span>{article.author}</span>
                       </div>
                     </div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
                       {article.title}
                     </h2>
-                    <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                    <p className="text-gray-600 text-sm sm:text-base line-clamp-3 mb-4">
                       {article.excerpt}
                     </p>
-                    <span className="inline-flex items-center gap-2 text-blue-600 font-medium group-hover:gap-3 transition-all">
+                    <span className="inline-flex items-center gap-2 text-blue-600 font-medium group-hover:gap-3 transition-all text-sm sm:text-base">
                       Baca Selengkapnya
                       <ArrowRight size={16} />
                     </span>

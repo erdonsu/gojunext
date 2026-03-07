@@ -94,18 +94,18 @@ export default async function ArtikelDetailPage({ params }: PageProps) {
               </button>
             </div>
 
-            <div className="prose prose-lg max-w-none">
-              <p className="text-gray-600 leading-relaxed text-lg mb-6">
+            <div className="prose prose-base sm:prose-lg max-w-none">
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base mb-6">
                 {article.excerpt}
               </p>
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl mb-8">
-                <p className="text-gray-700 italic">
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-5 sm:p-6 rounded-r-xl mb-8">
+                <p className="text-gray-700 italic text-sm sm:text-base">
                   &ldquo;Perjalanan menuju kesuksesan dimulai dari langkah kecil yang konsisten.
                   Bersama GoJuara, mari wujudkan impianmu menjadi juara!&rdquo;
                 </p>
               </div>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Artikel ini akan membahas lebih detail tentang {article.title.toLowerCase()}. 
+              <p className="text-gray-600 leading-relaxed mb-6 text-sm sm:text-base">
+                Artikel ini akan membahas lebih detail tentang {article.title.toLowerCase()}.
                 Informasi lengkap akan segera ditambahkan.
               </p>
             </div>

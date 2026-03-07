@@ -61,13 +61,13 @@ export default function Benefits() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium mb-4">
+          <div className="inline-block bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-6 tracking-wide">
             Manfaat Bergabung
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
             Apa yang akan kamu dapatkan?
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Berbagai hadiah dan manfaat menanti para peserta dan pemenang kompetisi GoJuara
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function Benefits() {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
+              className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl border border-gray-50 transition-all duration-300 hover:-translate-y-2 group"
             >
               <div className="w-20 h-20 mx-auto mb-6 relative">
                 <Image
@@ -87,10 +87,10 @@ export default function Benefits() {
                   className="object-contain group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-3">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 text-center mb-4">
                 {benefit.title}
               </h3>
-              <p className="text-gray-600 text-center text-sm leading-relaxed">
+              <p className="text-gray-600 text-center text-sm sm:text-base leading-relaxed">
                 {benefit.description}
               </p>
             </div>

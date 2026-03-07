@@ -58,27 +58,26 @@ export default function MediaCoverage() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 bg-white border-t">
+    <section ref={sectionRef} className="py-16 bg-white" id="media">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
-          <h3 className="text-xl font-semibold text-gray-900">Diliput oleh</h3>
+          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">Diliput oleh</p>
         </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-8 items-center">
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
           {mediaLogos.map((media, index) => (
             <a
               key={index}
               href={media.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="media-logo grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 flex items-center justify-center p-2"
+              className="media-logo grayscale hover:grayscale-0 transition-all duration-300 opacity-50 hover:opacity-100"
             >
               <Image
                 src={media.image}
                 alt={media.name}
                 width={120}
                 height={60}
-                className="h-10 sm:h-12 w-auto object-contain"
+                className="h-8 sm:h-10 w-auto object-contain"
               />
             </a>
           ))}
